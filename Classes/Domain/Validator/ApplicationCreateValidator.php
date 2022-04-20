@@ -33,27 +33,14 @@ class ApplicationCreateValidator extends AbstractValidator
     protected $settings = [];
 
     /**
-     * @var ConfigurationManager
-     */
-    protected $configurationManager;
-
-    public function injectConfigurationManager(ConfigurationManager $configurationManager)
-    {
-        $this->configurationManager = $configurationManager;
-    }
-
-    public function setOptions(array $options): void
-    {
-        $this->initializeDefaultOptions($options);
-    }
-
-    /**
      * @param \Dan\Jobfair\Domain\Model\Application $application
      * @return bool
      */
     public function isValid($application)
     {
-        $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'jobfair');
+        // @todo: Use dependency injection
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        $this->settings = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'jobfair');
         $isValid = true;
 
         if (empty($application->getEmail()) && $this->settings['application']['validation']['email']['required']) {

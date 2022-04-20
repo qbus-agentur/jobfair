@@ -6,7 +6,3 @@ services:
 
   Dan\Jobfair\:
     resource: '../Classes/*'
-
-  Dan\Jobfair\Domain\Validator\ApplicationCreateValidator:
-    public: true
-    shared: false
