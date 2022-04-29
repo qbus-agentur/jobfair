@@ -27,6 +27,6 @@ Available variables:
     </p>
     <p>
         <f:translate key="tx_jobfair_domain_model_application.message" extensionName="jobfair" />:<br>
-        {newApplication.message}
+        {newApplication.message->f:format.nl2br()}
     </p>
 </f:section>
