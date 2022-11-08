@@ -93,6 +93,9 @@
 			<trans-unit id="tx_jobfair_domain_model_job.internal_notes">
 				<source>Internal notes</source>
 			</trans-unit>
+			<trans-unit id="tx_jobfair_domain_model_job.job_reference">
+				<source>Job Reference</source>
+			</trans-unit>
 			<trans-unit id="tx_jobfair_domain_model_job.tstamp">
 				<source>Last update</source>
 			</trans-unit>

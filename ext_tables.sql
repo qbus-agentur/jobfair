@@ -26,6 +26,7 @@ CREATE TABLE tx_jobfair_domain_model_job (
 	feuser int(11) unsigned DEFAULT '0' NOT NULL,
 	application int(11) unsigned DEFAULT '0' NOT NULL,
 	internal_notes text NOT NULL,
+	job_reference varchar(255) DEFAULT '' NOT NULL,
 );
 
 #

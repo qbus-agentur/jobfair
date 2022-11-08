@@ -26,15 +26,15 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'job_title,employer,employer_description,location,short_job_description,job_description,experience,job_requirements,job_benefits,apply_information,salary,job_type,contract_type,region,contact,sector,category,discipline,education,feuser,',
+        'searchFields' => 'job_title,employer,employer_description,location,short_job_description,job_description,experience,job_requirements,job_benefits,apply_information,salary,job_type,contract_type,region,contact,sector,category,discipline,education,feuser,job_reference,',
         'iconfile' => 'EXT:jobfair/Resources/Public/Icons/tx_jobfair_domain_model_job.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, job_title, job_image, employer, employer_description, location, short_job_description, job_description, experience, job_requirements, job_benefits, apply_information, salary, job_type, contract_type, region, contact, sector, category, discipline, education, feuser, application, internal_notes',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, job_title, job_image, employer, employer_description, location, short_job_description, job_description, experience, job_requirements, job_benefits, apply_information, salary, job_type, contract_type, region, contact, sector, category, discipline, education, feuser, application, internal_notes, job_reference',
     ],
     'types' => [
         '1' => [
-            'showitem' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,job_title,slug,job_image,employer,employer_description,location,short_job_description,job_description,experience,job_requirements,job_benefits,apply_information,salary,job_type,contract_type,region,contact,sector,category,discipline,education,feuser,internal_notes,--div--;LLL:EXT:jobfair/Resources/Private/Language/locallang_db.xlf:tx_jobfair_domain_model_application,application,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime',
+            'showitem' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,job_title,slug,job_image,employer,employer_description,location,short_job_description,job_description,experience,job_requirements,job_benefits,apply_information,salary,job_type,contract_type,region,contact,sector,category,discipline,education,feuser,internal_notes,job_reference,--div--;LLL:EXT:jobfair/Resources/Private/Language/locallang_db.xlf:tx_jobfair_domain_model_application,application,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime',
         ],
     ],
     'columns' => [
@@ -494,6 +494,15 @@ return [
                 'cols' => 40,
                 'rows' => 16
             ]
+        ],
+        'job_reference' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:jobfair/Resources/Private/Language/locallang_db.xlf:tx_jobfair_domain_model_job.job_reference',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
         ],
         'slug' => [
             'label' => 'Slug',

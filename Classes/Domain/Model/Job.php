@@ -125,6 +125,13 @@ class Job extends AbstractEntity
     protected $contractType = 0;
 
     /**
+     * jobReference
+     *
+     * @var string
+     */
+    protected $jobReference = '';
+
+    /**
      * region
      *
      * @var ObjectStorage<Region>
@@ -518,6 +525,26 @@ class Job extends AbstractEntity
     public function setContractType($contractType)
     {
         $this->contractType = $contractType;
+    }
+
+    /**
+     * Getter for jobReference
+     *
+     * @return string
+     */
+    public function getJobReference()
+    {
+        return $this->jobReference;
+    }
+
+    /**
+     * Setter for jobReference
+     *
+     * @param string $jobReference
+     */
+    public function setJobReference($jobReference)
+    {
+        $this->jobReference = $jobReference;
     }
 
     /**
