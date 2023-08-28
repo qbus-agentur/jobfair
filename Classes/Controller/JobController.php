@@ -38,6 +38,9 @@ use Dan\Jobfair\Property\TypeConverter\UploadedFileReferenceConverter;
 use Dan\Jobfair\Service\AccessControlService;
 use Dan\Jobfair\Utility\Div;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Http\ImmediateResponseException;
+//use TYPO3\CMS\Core\Http\PropagateResponseException;
+use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -45,7 +48,9 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+
 
 /**
  * The controller for Jobs
@@ -174,6 +179,24 @@ class JobController extends ActionController
      */
     public function initializeListAction()
     {
+        $this->arguments->getArgument('filter')
+            ->getPropertyMappingConfiguration()
+            ->setTypeConverterOption(PersistentObjectConverter::class, PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED, true)
+            ->allowAllProperties();
+
+        foreach (['categories', 'regions', 'sectors', 'disciplines', 'educations'] as $property) {
+            $this->arguments->getArgument('filter')
+                ->getPropertyMappingConfiguration()
+                ->forProperty($property)
+                ->allowAllProperties()
+                ->setTypeConverterOption(
+                    PersistentObjectConverter::class,
+                    PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+                    true
+                );
+        }
+
+
         $arguments = $this->request->getArguments();
         if ((int)$arguments['filter']['categories'][0] === 0) {
             unset($arguments['filter']['categories']);
@@ -193,6 +216,26 @@ class JobController extends ActionController
         $this->request->setArguments($arguments);
     }
 
+    protected function redirectIfPost(Filter $filter = null) {
+        if ($this->request->getMethod() === 'POST') {
+            $action = NULL;
+            $arguments = array('filter' => $filter);
+            $controller = NULL;
+            $extensionName = NULL;
+            $pluginName = NULL;
+
+            $uri = $this
+                ->uriBuilder
+                ->reset()
+                ->uriFor($action, $arguments, $controller, $extensionName, $pluginName);
+
+            // Use PropagateResponseException as of TYPO3 v11
+            //throw new PropagateResponseException(new RedirectResponse($uri, 303), 1693206326);
+            throw new ImmediateResponseException(new RedirectResponse($uri, 303), 1693206326);
+        }
+    }
+
+
     /**
      * action list
      *
@@ -202,6 +245,7 @@ class JobController extends ActionController
      */
     public function listAction(Filter $filter = null)
     {
+        $this->redirectIfPost($filter);
         /* redirect to latest view if enabled in the plugin */
         if ($this->settings['latest']['enableLatest']) {
             $this->forward('latest');

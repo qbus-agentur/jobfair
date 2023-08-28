@@ -15,7 +15,7 @@
 
 namespace Dan\Jobfair\Domain\Model;
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -23,7 +23,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  *
  * @author Dan <typo3dev@outlook.com>
  */
-class Filter extends AbstractEntity
+class Filter extends AbstractValueObject
 {
 
     /**
