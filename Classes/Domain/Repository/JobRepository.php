@@ -55,7 +55,10 @@ class JobRepository extends Repository
             //jobtype
             $jobType = $filter->getJobType();
             if (($jobType!== null) && ($jobType != 99)) {      // 99 is used as "all" option in hard coded select forms
-                $constraints[] = $query->equals('job_type', $jobType);
+                $constraints[] = $query->logicalOr(
+                    $query->equals('job_type', 99),
+                    $query->equals('job_type', $jobType)
+                );
             }
 
             //contracttype
